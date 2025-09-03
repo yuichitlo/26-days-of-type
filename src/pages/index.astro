@@ -1,4 +1,7 @@
 ---
+import Gallery from '../components/Gallery.astro';
+
+import '../styles/global.css';
 
 ---
 
@@ -6,11 +9,15 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Hedvig+Letters+Serif:opsz@12..24&display=swap" rel="stylesheet">
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>26 Days of Type</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1>26<br>Days<br>of<br>Type</h1>
+		<Gallery />
 	</body>
 </html>

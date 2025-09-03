@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import DetailView from "./DetailView";
+import GalleryItem from "./GalleryItem";
+
+const allLetters = await getCollection("letter");
+
+let lettersByRow: { [key: string]: any[] } = Object.create({});
+allLetters.forEach((letter: any) => {
+    if (lettersByRow[letter.data.row] === undefined) {
+        lettersByRow[letter.data.row] = [];
+    }
+
+    lettersByRow[letter.data.row].push(letter);
+});
+
+---
+<section class="gallery">
+    {Object.keys(lettersByRow).map((rowNum: string) => {
+        const letterHTML = lettersByRow[rowNum].map((letter: any) => <GalleryItem letter={letter}/>);
+        return <div class="gallery-row">
+            {letterHTML}
+        </div>;
+    })}
+    <DetailView />
+</section>
