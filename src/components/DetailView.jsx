@@ -1,5 +1,9 @@
-import store from "../store";
+'use client';
+import { useStore } from '@nanostores/react';
+import { viewSettings } from "../store";
+
 
 export default function DetailView() {
-  return <div>store</div>;
+  const $letter = useStore(viewSettings);
+  return $letter && <div>{$letter}</div>;
 }

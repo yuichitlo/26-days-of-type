@@ -17,10 +17,10 @@ allLetters.forEach((letter: any) => {
 ---
 <section class="gallery">
     {Object.keys(lettersByRow).map((rowNum: string) => {
-        const letterHTML = lettersByRow[rowNum].map((letter: any) => <GalleryItem letter={letter}/>);
+        const letterHTML = lettersByRow[rowNum].map((letter: any) => <GalleryItem client:load letter={letter}/>);
         return <div class="gallery-row">
             {letterHTML}
         </div>;
     })}
-    <DetailView />
+    <DetailView client:load />
 </section>

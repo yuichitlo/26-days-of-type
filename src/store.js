@@ -1,8 +1,9 @@
 import { atom } from "nanostores"
 
-export const store = atom();
+export const viewSettings = atom();
 
 export function setLetter(letter) {
-  store.set(letter);
+    debugger;
+  viewSettings.set(letter);
   console.log("Set letter: ", letter);
 }
