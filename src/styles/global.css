@@ -5,6 +5,14 @@
     font-family: "DM Sans", Arial, Helvetica, sans-serif;
 }
 
+body {
+    margin: -8px;
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    overflow: hidden;
+}
+
 h1 {
     position: absolute;
     top: -8px;
@@ -17,36 +25,64 @@ h1 {
 }
 
 .gallery {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    /* grid-template-columns: repeat(auto, minmax(200px, 1fr)); */
+    grid-template-rows: repeat(4, calc((100vh - 3.6vw + 16px)/4));
+    overflow: hidden;
+    height: calc(100vh + 16px);
+    max-height: calc(100vh + 16px);
+    min-width: 80%;
+    max-width: 80%;
+    margin-left: 10%;
+    gap: 1.2vw;
 
     .gallery-row {
         display: flex;
         flex-direction: row;
-        max-width: 60%;
+        overflow: hidden;
+        height: 100%;
+        gap: 1.2vw;
+
+        &:nth-child(1) {
+            justify-content: center;
+        }
+
+        &:nth-child(3) {
+            justify-content: end;
+        }
+
+        &:nth-child(4) {
+            justify-content: center;
+        }
 
         .gallery-item-wrapper {
-            width: 100%;
             .gallery-item {
+                height: 100%;
+                object-fit: scale-down;
+                aspect-ratio: 1/1;
                 img {
-                    width: 100%;
+                    max-height: 100%;
                     aspect-ratio: 1/1;
-                    object-fit: contain;
+                    object-fit: cover;
                     overflow: hidden;
                 }
             }
         }
 
         .gallery-item-multi-wrapper {
-            display: flex;
+            display: inline-flex;
             flex-direction: column;
-            width: 50%;
+            max-height: 100%;
+            gap: 1.2vw;
 
             .gallery-item {
+                height: calc((100% - 1.2vw)/2);
+                object-fit: cover;
+                aspect-ratio: 1/1;
+
                 img {
                     width: 100%;
-                    aspect-ratio: 1/1;
-                    object-fit: contain;
+                    object-fit: cover;
                     overflow: hidden;
                 }
             }

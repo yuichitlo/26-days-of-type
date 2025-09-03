@@ -8,7 +8,7 @@ export default function GalleryItem({letter}) {
       alert(`You clicked ${letter.data.letter}`);
       setLetter({...letter.data, content: letter.body});
     }}>
-      <img src={letter.data.dropcap.src} alt=""/>
+      {letter.data?.dropcap && <img src={letter.data.dropcap.src} alt=""/>}
     </div>
   );
 }

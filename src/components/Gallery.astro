@@ -8,48 +8,69 @@ const allLetters = await getCollection("letter");
 
 let lettersByRow: { [key: string]: any[] } = Object.create({});
 let smallArray = [];
-let currentKey = '';
-allLetters.sort((letter1: any, letter2: any) => {
-    if (letter1.data.letter < letter2.data.letter) {
-        return -1;
-    }
-    if (letter1.data.letter > letter2.data.letter) {
-        return 1;
-    }
+let smallArrayKey = '';
 
-    // names must be equal
-    return 0;
+const getLetterValue: (letter: any) => string = (letter) => {
+    return letter.data && letter.data.letter;
+};
+
+// Sort all letter objects in alphabetical order.
+allLetters.sort((letter1: any, letter2: any) => {
+    return getLetterValue(letter1) < getLetterValue(letter2)
+        ? -1
+        : getLetterValue(letter1) > getLetterValue(letter2) ? 1 : 0;
 });
 
 allLetters.forEach((letter: any) => {
-    currentKey = letter.data.row;
-    console.log(letter.data.letter);
-    if (lettersByRow[letter.data.row] === undefined) {
-        console.log('Starting new array:' + letter.data.letter);
-        lettersByRow[letter.data.row] = [];
+    const currentRowKey = letter.data.row;
+    /* If this is the first letter in a row:
+        1) Make sure the last small array has been added to previous row.
+        2) Update the new small array key.
+        3) Initialize the new row.
+    */
+    if (lettersByRow[currentRowKey] === undefined) {
+        if (smallArray.length) {
+            lettersByRow[smallArrayKey].push(smallArray);
+            smallArray = [];
+        }
+
+        smallArrayKey = currentRowKey;
+        lettersByRow[currentRowKey] = [];
     }
 
+    /* If this letter is small:
+        1) Check if small array is full.
+        2) If full, push it into the row and reset the small array with new letter.
+        3) Else, push it onto the small array.
+    */
     if (letter.data.size.match('small')) {
-        console.log('Pushing onto small array:' + letter.data.letter);
-        smallArray.push(letter);
+        if (smallArray.length == 2) {
+            lettersByRow[smallArrayKey].push(smallArray);
+            smallArray = [letter];
+        }
+        else {
+            smallArray.push(letter);
+        }
     }
+    /* Else, the letter is big:
+        1) Check if there's anything in the small array.
+        2) If it's not empty, push it into the row and reset the small array.
+        3) Push the new letter into the row.
+    */
     else {
         if (smallArray.length) {
-            console.log('Ending small array:' + letter.data.letter);
-            lettersByRow[letter.data.row].push(smallArray);
+            lettersByRow[smallArrayKey].push(smallArray);
             smallArray = [];
         }
 
         lettersByRow[letter.data.row].push(letter);
-        console.log('Pushing onto full array:' + letter.data.letter);
     }
 });
 
+// In case the last letter is small, we need to push the last of small array.
 if (smallArray.length) {
-    console.log('Final pushing small array');
-    lettersByRow[currentKey].push(smallArray);
+    lettersByRow[smallArrayKey].push(smallArray);
 }
-
 
 ---
 <section class="gallery">
