@@ -4,13 +4,11 @@ import { setLetter } from "../store";
 
 export default function GalleryItem({letter}) {
   return letter && (
-    <div className="sample" onClick={() => {
+    <div className="gallery-item" onClick={() => {
       alert(`You clicked ${letter.data.letter}`);
       setLetter({...letter.data, content: letter.body});
     }}>
-        <div className="gallery-item">
-              <img src={letter.data.dropcap.src} alt=""/>
-        </div>
+      <img src={letter.data.dropcap.src} alt=""/>
     </div>
   );
 }

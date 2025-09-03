@@ -2,22 +2,61 @@
 import { getCollection } from "astro:content";
 import DetailView from "./DetailView";
 import GalleryItem from "./GalleryItem";
+import { map } from "astro:schema";
 
 const allLetters = await getCollection("letter");
 
 let lettersByRow: { [key: string]: any[] } = Object.create({});
+let smallArray = [];
+let currentKey = '';
+allLetters.sort((letter1: any, letter2: any) => {
+    if (letter1.data.letter < letter2.data.letter) {
+        return -1;
+    }
+    if (letter1.data.letter > letter2.data.letter) {
+        return 1;
+    }
+
+    // names must be equal
+    return 0;
+});
+
 allLetters.forEach((letter: any) => {
+    currentKey = letter.data.row;
+    console.log(letter.data.letter);
     if (lettersByRow[letter.data.row] === undefined) {
+        console.log('Starting new array:' + letter.data.letter);
         lettersByRow[letter.data.row] = [];
     }
 
-    lettersByRow[letter.data.row].push(letter);
+    if (letter.data.size.match('small')) {
+        console.log('Pushing onto small array:' + letter.data.letter);
+        smallArray.push(letter);
+    }
+    else {
+        if (smallArray.length) {
+            console.log('Ending small array:' + letter.data.letter);
+            lettersByRow[letter.data.row].push(smallArray);
+            smallArray = [];
+        }
+
+        lettersByRow[letter.data.row].push(letter);
+        console.log('Pushing onto full array:' + letter.data.letter);
+    }
 });
+
+if (smallArray.length) {
+    console.log('Final pushing small array');
+    lettersByRow[currentKey].push(smallArray);
+}
+
 
 ---
 <section class="gallery">
     {Object.keys(lettersByRow).map((rowNum: string) => {
-        const letterHTML = lettersByRow[rowNum].map((letter: any) => <GalleryItem client:load letter={letter}/>);
+        const letterHTML = lettersByRow[rowNum].map((letters: any[]) => letters.length > 1
+            ? <div class='gallery-item-multi-wrapper'><>{letters.map((letter: any) => <GalleryItem client:load letter={letter}/>)}</></div>
+            : <div class='gallery-item-wrapper'><GalleryItem client:load letter={letters}/></div>);
         return <div class="gallery-row">
             {letterHTML}
         </div>;
