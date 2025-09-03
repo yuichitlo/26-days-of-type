@@ -6,7 +6,7 @@ export default function GalleryItem({letter}) {
   return letter && (
     <div className="sample" onClick={() => {
       alert(`You clicked ${letter.data.letter}`);
-      setLetter(letter.data.letter.toLowerCase());
+      setLetter({...letter.data, content: letter.body});
     }}>
         <div className="gallery-item">
               <img src={letter.data.dropcap.src} alt=""/>

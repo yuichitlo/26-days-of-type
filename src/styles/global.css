@@ -38,3 +38,51 @@ h1 {
         }
     }
 }
+
+.details-view {
+    padding: 5em 4em;
+    border-top: 2px solid var(--borderColor);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    overflow: hidden;
+    cursor: text;
+
+
+    p {
+        margin-block-start: 0;
+    }
+
+    .details-text {
+        margin-block-start: 0;
+        font-family: 'Hedvig Letters Serif', 'Times New Roman', Times, serif;
+        line-height: 160%;
+        font-size: 1.25em;
+        color: #171717;
+
+        .dropcap {
+            margin: 0 .8em 0 0;
+            float: left;
+            width: 9em;
+            box-shadow: 4px 4px 8px rgba(154, 160, 185, 0.15);
+
+            &:after {
+                margin-bottom: -0.15em;
+            }
+        }
+    }
+
+    hr {
+        width: 100%;
+    }
+
+    .examples {
+        display: flex;
+        width: 100%;
+        gap: 0.5em;
+
+        img {
+            max-width: 100%;
+        }
+    }
+}
