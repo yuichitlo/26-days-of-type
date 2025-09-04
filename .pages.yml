@@ -1,0 +1,5 @@
+content:
+  - name: letters
+    label: Letters
+    type: collection
+    path: src/content/letter
