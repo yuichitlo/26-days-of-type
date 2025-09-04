@@ -4,7 +4,7 @@ content:
     type: collection
     path: src/content/letter
     view:
-      fields: [title, letter]
+      fields: [title, letter, row, size, body]
     fields:
       - name: title
         label: Title
@@ -12,6 +12,9 @@ content:
       - name: letter
         label: Letter
         type: string
+      - name: row
+        label: Row
+        type: number
       - name: size
         label: Size
         type: select
@@ -21,3 +24,6 @@ content:
               label: Small
             - value: big
               label: Big
+      - name: body
+        label: Body
+        type: rich-text
