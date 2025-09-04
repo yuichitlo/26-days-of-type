@@ -14,7 +14,7 @@ content:
         type: string
       - name: row
         label: Row
-        type: number
+        type: string
       - name: size
         label: Size
         type: select
