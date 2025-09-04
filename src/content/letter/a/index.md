@@ -1,5 +1,5 @@
 ---
 title: Agnes Martin
 letter: A
-size: big
+size: small
 ---
