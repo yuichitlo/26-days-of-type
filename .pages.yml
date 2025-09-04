@@ -2,7 +2,7 @@ content:
   - name: letters
     label: Letters
     type: collection
-    path: src/content/letter
+    path: src/content/letter/*
     view:
       fields: [title, letter, row, size, body]
     fields:
