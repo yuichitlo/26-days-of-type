@@ -3,26 +3,27 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import DetailView from "./DetailView";
 import GalleryItem from "./GalleryItem";
+import type { LetterEntry } from "../types";
 
 const allLetters = await getCollection("letter");
 
-let lettersByRow: { [key: string]: any[] } = Object.create({});
-let smallArray = [];
+let lettersByRow: { [key: string]: LetterEntry[][] } = Object.create({});
+let smallArray: LetterEntry[] = [];
 let smallArrayKey = '';
 
-const getLetterValue: (letter: any) => string = (letter) => {
+const getLetterValue: (letter: LetterEntry) => string = (letter) => {
     return letter.data && letter.data.letter;
 };
 
 // Sort all letter objects in alphabetical order.
-allLetters.sort((letter1: any, letter2: any) => {
+allLetters.sort((letter1: LetterEntry, letter2: LetterEntry) => {
     return getLetterValue(letter1) < getLetterValue(letter2)
         ? -1
         : getLetterValue(letter1) > getLetterValue(letter2) ? 1 : 0;
 });
 
-allLetters.forEach((letter: any) => {
-    const currentRowKey = letter.data.row;
+allLetters.forEach((letter: LetterEntry) => {
+    const currentRowKey = letter.data.row.toString();
     /* If this is the first letter in a row:
         1) Make sure the last small array has been added to previous row.
         2) Update the new small array key.
@@ -75,9 +76,9 @@ if (smallArray.length) {
 ---
 <section class="gallery">
     {Object.keys(lettersByRow).map((rowNum: string) => {
-        const letterHTML = lettersByRow[rowNum].map((letters: any[]) =>
+        const letterHTML = lettersByRow[rowNum].map((letters: LetterEntry[]) =>
             <div class={letters.length > 1 ? 'gallery-item-multi-wrapper' : 'gallery-item-wrapper'}><>
-                {letters.map((letter: any) => <GalleryItem client:load letter={letter}>
+                {letters.map((letter: LetterEntry) => <GalleryItem client:load letter={letter}>
                     <Image src={letter.data?.dropcap} alt="" priority/>
                 </GalleryItem>)}
             </></div>);
