@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import DetailView from "./DetailView";
 import GalleryItem from "./GalleryItem";
-import { map } from "astro:schema";
 
 const allLetters = await getCollection("letter");
 
@@ -63,7 +63,7 @@ allLetters.forEach((letter: any) => {
             smallArray = [];
         }
 
-        lettersByRow[letter.data.row].push(letter);
+        lettersByRow[letter.data.row].push([letter]);
     }
 });
 
@@ -75,9 +75,12 @@ if (smallArray.length) {
 ---
 <section class="gallery">
     {Object.keys(lettersByRow).map((rowNum: string) => {
-        const letterHTML = lettersByRow[rowNum].map((letters: any[]) => letters.length > 1
-            ? <div class='gallery-item-multi-wrapper'><>{letters.map((letter: any) => <GalleryItem client:load letter={letter}/>)}</></div>
-            : <div class='gallery-item-wrapper'><GalleryItem client:load letter={letters}/></div>);
+        const letterHTML = lettersByRow[rowNum].map((letters: any[]) =>
+            <div class={letters.length > 1 ? 'gallery-item-multi-wrapper' : 'gallery-item-wrapper'}><>
+                {letters.map((letter: any) => <GalleryItem client:load letter={letter}>
+                    <Image src={letter.data?.dropcap} alt="" priority/>
+                </GalleryItem>)}
+            </></div>);
         return <div class="gallery-row">
             {letterHTML}
         </div>;
