@@ -2,6 +2,7 @@ content:
   - name: letters
     label: Letters
     type: collection
+    subfolders: false
     path: src/content/letter
     view:
       fields: [title, letter]
