@@ -24,6 +24,6 @@ content:
               label: Small
             - value: big
               label: Big
-      - name: body
-        label: Body
+      - name: content
+        label: Content
         type: rich-text
