@@ -3,3 +3,13 @@ content:
     label: Letters
     type: collection
     path: src/content/letter
+    view:
+      fields: [title, letter]
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: letter
+        label: Letter
+        type: string
+      
