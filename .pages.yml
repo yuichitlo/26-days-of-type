@@ -12,4 +12,12 @@ content:
       - name: letter
         label: Letter
         type: string
-      
+      - name: size
+        label: Size
+        type: select
+        options:
+          values:
+            - value: small
+              label: Small
+            - value: big
+              label: Big
